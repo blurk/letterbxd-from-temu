@@ -1,34 +1,32 @@
-import { useActionState } from "react";
-import { searchMovie } from "./actions";
 import "./App.css";
-import SearchMovieList from "./components/SearchMovieList";
+import { Link, Route, Router } from "./Route";
+import Home from "./components/Home";
+import WatchList from "./components/WatchList";
 
-function App() {
-  const [data, formAction, isPending] = useActionState(
-    searchMovie,
-    null,
-    "/query",
-  );
-
+export function App() {
   return (
-    <main className="container">
-      <h1>Letterbxd from temu</h1>
+    <Router>
+      <main className="container">
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">
+                <strong>Letterbxd from temu</strong>
+              </Link>
+            </li>
+          </ul>
 
-      <form action={formAction}>
-        <input type="text" name="query" id="query" />
-        <button type="submit" disabled={isPending}>
-          Search
-        </button>
-      </form>
+          <li>
+            <Link to="/watchlist">
+              <span>Your watchlist</span>
+            </Link>
+          </li>
+        </nav>
 
-      <div>
-        {isPending ? (
-          <span aria-busy="true">Loading...</span>
-        ) : (
-          data && <SearchMovieList data={data} />
-        )}
-      </div>
-    </main>
+        <Route path="/" exact component={Home} />
+        <Route path="/watchlist" component={WatchList} />
+      </main>
+    </Router>
   );
 }
 
