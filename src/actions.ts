@@ -13,7 +13,7 @@ const options = {
 };
 
 export const searchMovie = async function (
-  prevState: any,
+  _: any,
   queryData: any,
 ): Promise<CollectionMovie | null> {
   "use server";
