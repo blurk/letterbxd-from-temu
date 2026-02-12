@@ -21,3 +21,8 @@ export type CollectionMovie = {
   total_pages: number;
   total_results: number;
 };
+
+export type DataResponse<D> = {
+  data: D | null;
+  error: string | null;
+};

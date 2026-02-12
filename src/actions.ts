@@ -1,10 +1,9 @@
 import { KEY, URL_API } from "./constants";
 import { Storage } from "./storage";
-import type { CollectionMovie } from "./types";
+import type { CollectionMovie, DataResponse } from "./types";
 import supabase from "./supabase";
-import { historyPush } from "./Route";
 
-const options = {
+export const options = {
   method: "GET",
   headers: {
     accept: "application/json",
@@ -13,26 +12,16 @@ const options = {
 };
 
 export const searchMovie = async function (
-  _: any,
-  queryData: any,
-): Promise<CollectionMovie | null> {
-  "use server";
-  const params = new URLSearchParams(queryData);
-
+  query: string,
+): Promise<DataResponse<CollectionMovie>> {
   try {
-    const res = await fetch(
-      URL_API + "/search/movie" + "?" + params.toString(),
-      options,
-    );
-
-    historyPush("/search?" + params.toString());
+    const res = await fetch(URL_API + "/search/movie" + "?query=" + query, options);
 
     const data = await res.json();
 
-    return data;
+    return { data, error: null };
   } catch (error) {
-    console.error(error);
-    return null;
+    return { data: null, error: "Failed to fetch movies" };
   }
 };
 
@@ -51,7 +40,6 @@ export const addMovieToWatchList = async function (_: any, queryData: any) {
         title: title || "",
         poster_path: poster_path || null,
       });
-      historyPush("/watchlist");
     } catch (error) {}
   }
 };

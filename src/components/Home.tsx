@@ -1,37 +1,19 @@
-import { useActionState } from "react";
-import { searchMovie } from "../actions";
-import Loader from "../components/Loader";
-import LoginForm from "../components/LoginForm";
-import SearchMovieList from "../components/SearchMovieList";
-import useAuth from "../hooks/useAuth";
+import { Form, useNavigation } from "react-router";
 
-const Home = () => {
-  const [data, formAction, isPending] = useActionState(searchMovie, null);
-
-  const { isLoading, isLoggedIn } = useAuth();
+function Home() {
+  const navigation = useNavigation();
+  const isLoading = navigation.formAction === "/search";
 
   return (
     <>
-      {isLoading ? (
-        <Loader />
-      ) : isLoggedIn ? (
-        <>
-          <form action={formAction}>
-            <input type="text" name="query" id="query" />
-            <button type="submit" disabled={isPending}>
-              Search
-            </button>
-          </form>
-
-          <div>
-            {isPending ? <Loader /> : data && <SearchMovieList data={data} />}
-          </div>
-        </>
-      ) : (
-        <LoginForm />
-      )}
+      <Form role="search" method="GET" action="/search">
+        <input type="text" name="query" id="query" defaultValue={""} />
+        <button type="submit" aria-busy={isLoading}>
+          {isLoading ? "Searching..." : "Search"}
+        </button>
+      </Form>
     </>
   );
-};
+}
 
 export default Home;

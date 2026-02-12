@@ -1,13 +1,13 @@
-import { useEffect } from 'react';
-import { useActionState } from 'react';
-import { signIn } from '../actions';
-import Loader from './Loader';
+import { useEffect } from "react";
+import { useActionState } from "react";
+import { signIn } from "../actions";
+import Loader from "./Loader";
 
 type Props = {
   onSuccess?: () => void;
 };
 
-export default function LoginForm({ onSuccess }: Props) {
+export default function Login({ onSuccess }: Props) {
   const [data, formAction, isPending] = useActionState(signIn, null);
 
   useEffect(() => {
