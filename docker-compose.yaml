@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:alpine3.22
+    container_name: postgres-local
+    restart: always
+    environment:
+      POSTGRES_USER: sena
+      POSTGRES_PASSWORD: "@Sena123"
+      POSTGRES_DB: letterbxd_from_temu
+    ports:
+      - "5432:5432" # Maps host 5432 to container 5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data # Persists data on your machine
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin-local
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: sena@example.com
+      PGADMIN_DEFAULT_PASSWORD: "@Sena123"
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
