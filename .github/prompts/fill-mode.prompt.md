@@ -4,7 +4,6 @@ description: "Help me to fill my code blueprint: implement the code, respect the
 ---
 
 # /fill-mode - implement the code, respect the shape, and do nothing extra.
-Blueprint Mode:
 Implement only the function bodies from the English instructions in the selected code.
 Preserve all existing types, function names, signatures, and return values.
 Do not rename anything.
